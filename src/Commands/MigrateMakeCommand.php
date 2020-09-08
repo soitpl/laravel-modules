@@ -1,8 +1,8 @@
 <?php
-/**
- * MakeMigrationCommand.php
+/*
+ * MigrateMakeCommand.php
  *
- * @lastModification 03.05.2020, 17:27
+ * @lastModification 12.08.2020, 01:31
  * @author Rafał Tadaszak <r.tadaszak@soit.pl>
  * @copyright soIT.pl 2018 - 2020
  * @url http://www.soit.pl
@@ -13,9 +13,13 @@ namespace soIT\LaravelModules\Commands;
 use Illuminate\Database\Migrations\MigrationCreator;
 use Illuminate\Support\Composer;
 use soIT\LaravelModules\Commands\Traits\HasModule;
-use soIT\LaravelModules\Repository\ModulesRepository;
+use soIT\LaravelModules\Containers\ModulesContainer;
 use Symfony\Component\Console\Input\InputArgument;
 
+/**
+ * Class MigrateMakeCommand
+ * @codeCoverageIgnore
+ */
 class MigrateMakeCommand extends \Illuminate\Database\Console\Migrations\MigrateMakeCommand
 {
     use HasModule;
@@ -25,7 +29,7 @@ class MigrateMakeCommand extends \Illuminate\Database\Console\Migrations\Migrate
      *
      * @var string
      */
-    protected $signature = 'make:module-migration {module : The name of the module} {name : The name of the migration}
+    protected $signature = 'make:module:migration {module : The name of the module} {name : The name of the migration}
         {--create= : The table to be created}
         {--table= : The table to migrate}
         {--path= : The location where the migration file should be created}
@@ -51,9 +55,9 @@ class MigrateMakeCommand extends \Illuminate\Database\Console\Migrations\Migrate
      *
      * @param MigrationCreator $creator
      * @param Composer $composer
-     * @param ModulesRepository $repository
+     * @param ModulesContainer $repository
      */
-    public function __construct(MigrationCreator $creator, Composer $composer, ModulesRepository $repository)
+    public function __construct(MigrationCreator $creator, Composer $composer, ModulesContainer $repository)
     {
         parent::__construct($creator, $composer);
 
@@ -66,8 +70,8 @@ class MigrateMakeCommand extends \Illuminate\Database\Console\Migrations\Migrate
     protected function getArguments()
     {
         return [
+            ['module', InputArgument::REQUIRED, 'The module name'],
             ['name', InputArgument::REQUIRED, 'The migration name'],
-            ['module', InputArgument::OPTIONAL, 'The module name'],
         ];
     }
 

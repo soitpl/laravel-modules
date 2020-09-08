@@ -1,7 +1,11 @@
 <?php
 /**
+ * RouteServiceProvider.php
+ *
+ * @lastModification 22.07.2020, 00:36
  * @author Rafał Tadaszak <r.tadaszak@soit.pl>
- * @copyright soIT {2019}
+ * @copyright soIT.pl 2018 - 2020
+ * @url http://www.soit.pl
  */
 
 namespace soIT\LaravelModules\Providers;
@@ -14,6 +18,18 @@ use ReflectionException;
 abstract class RouteServiceProvider extends ServiceProvider
 {
     /**
+     * Define the routes for the admin modules
+     *
+     * @return void
+     * @throws ReflectionException
+     */
+    public function map():void
+    {
+        $this->mapApiRoutes();
+        $this->mapWebRoutes();
+    }
+
+    /**
      * Define the "web" routes for the module
      *
      * @return void
@@ -21,25 +37,13 @@ abstract class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        $file = $this->getRoutesDir() . '/web.php';
+        $file = $this->getRoutesDir().'/web.php';
 
         if (file_exists($file)) {
             Route::middleware('web')
-                ->namespace($this->namespace)
-                ->group($file);
+                 ->namespace($this->namespace)
+                 ->group($file);
         }
-    }
-
-    /**
-     * Define the routes for the admin modules
-     *
-     * @return void
-     * @throws ReflectionException
-     */
-    public function map(): void
-    {
-        $this->mapApiRoutes();
-        $this->mapWebRoutes();
     }
 
     /**
@@ -50,13 +54,13 @@ abstract class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
-        $file = $this->getRoutesDir() . '/api.php';
+        $file = $this->getRoutesDir().'/api.php';
 
         if (file_exists($file)) {
             Route::prefix('api')
-                ->middleware('api')
-                ->namespace($this->namespace)
-                ->group($file);
+                 ->middleware('api')
+                 ->namespace($this->namespace)
+                 ->group($file);
         }
     }
 
@@ -65,10 +69,10 @@ abstract class RouteServiceProvider extends ServiceProvider
      *
      * @throws ReflectionException
      */
-    protected function getRoutesDir(): string
+    protected function getRoutesDir():string
     {
         return realpath(
-            dirname((new ReflectionClass($this))->getFileName()) . '/../../routes'
+            dirname((new ReflectionClass($this))->getFileName()).'/../../routes'
         );
     }
 }

@@ -1,7 +1,11 @@
 <?php
 /**
+ * ServiceProvider.php
+ *
+ * @lastModification 22.07.2020, 00:36
  * @author Rafał Tadaszak <r.tadaszak@soit.pl>
- * @copyright soIT {2019}
+ * @copyright soIT.pl 2018 - 2020
+ * @url http://www.soit.pl
  */
 
 namespace soIT\LaravelModules\Providers;
@@ -10,9 +14,9 @@ use Illuminate\Foundation\Application;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionException;
-use soIT\LaravelModules\Files\Filesystem;
+use soIT\LaravelModules\Containers\ModulesContainer;
 use soIT\LaravelModules\Entity\Module;
-use soIT\LaravelModules\Repository\ModulesRepository;
+use soIT\LaravelModules\Files\Filesystem;
 
 abstract class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -27,24 +31,25 @@ abstract class ServiceProvider extends \Illuminate\Support\ServiceProvider
     protected Module $module;
 
     /**
-     * @var ModulesRepository
+     * @var ModulesContainer
      */
-    protected ModulesRepository $repository;
-
-    abstract protected function initFileSystem(): Filesystem;
+    protected ModulesContainer $container;
 
     /**
      * ServiceProvider constructor.
      *
-     * @param $app
-     * @param ModulesRepository $repository
+     * @param Application $app
      */
-    public function __construct(Application $app) {
+    public function __construct(Application $app)
+    {
         parent::__construct($app);
 
-        $this->repository = $app->make(ModulesRepository::class);
+        $this->container = $app->make(ModulesContainer::class);
+
         $this->fileSystem = $this->initFileSystem();
     }
+
+    abstract protected function initFileSystem():Filesystem;
 
     /**
      * @throws ReflectionException
@@ -71,6 +76,7 @@ abstract class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     /**
      * Register all module resources: views, trans
+     * @codeCoverageIgnore
      */
     protected function registerResources():void
     {
@@ -80,6 +86,7 @@ abstract class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     /**
      * Register translations files
+     * @codeCoverageIgnore
      */
     protected function registerTranslations():void
     {
@@ -88,6 +95,7 @@ abstract class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     /**
      * Register views files
+     * @codeCoverageIgnore
      */
     protected function registerViews():void
     {
@@ -96,6 +104,7 @@ abstract class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     /**
      * Register directory with migrations files
+     * @codeCoverageIgnore
      */
     private function registerMigrations():void
     {
@@ -110,7 +119,7 @@ abstract class ServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         $this->module = new Module($this);
 
-        $this->repository->register($this->module);
+        $this->container->register($this->module);
     }
 
     /**

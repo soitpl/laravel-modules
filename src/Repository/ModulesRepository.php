@@ -27,7 +27,7 @@ class ModulesRepository
         if (isset($this->modules[$name])) {
             return $this->modules[$name];
         } else {
-            throw new ModuleNotRegisteredException("Module {$name} wasn'r found in register modules");
+            throw new ModuleNotRegisteredException("Module {$name} wasn't found in register modules");
         }
     }
 

@@ -2,7 +2,7 @@
 /**
  * IsCreatesFile.php
  *
- * @lastModification 04.05.2020, 09:56
+ * @lastModification 22.07.2020, 00:36
  * @author Rafał Tadaszak <r.tadaszak@soit.pl>
  * @copyright soIT.pl 2018 - 2020
  * @url http://www.soit.pl
@@ -17,7 +17,7 @@ trait IsCreatesFile
     /**
      * @param string $path
      */
-    private function createDirectoryIfDontExists(string $path): void
+    private function createDirectoryIfDontExists(string $path):void
     {
         if (!File::isDirectory($dir = dirname($path))) {
             File::makeDirectory($dir, 0777, true);

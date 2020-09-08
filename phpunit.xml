@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ phpunit.xml
+  ~
+  ~ @lastModification 02.09.2019, 19:32
+  ~ @author Rafał Tadaszak <r.tadaszak@soit.pl>
+  ~ @copyright soIT.pl 2018 - 2020
+  ~ @url http://www.soit.pl
+  -->
+
 <phpunit backupGlobals="false"
          backupStaticAttributes="false"
          bootstrap="../../../vendor/autoload.php"

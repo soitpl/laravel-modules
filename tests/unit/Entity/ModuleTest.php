@@ -2,7 +2,7 @@
 /**
  * ModuleTest.php
  *
- * @lastModification 04.05.2020, 07:41
+ * @lastModification 22.07.2020, 00:35
  * @author Rafał Tadaszak <r.tadaszak@soit.pl>
  * @copyright soIT.pl 2018 - 2020
  * @url http://www.soit.pl
@@ -12,17 +12,14 @@ namespace soIT\LaravelModules\Tests\Unit\Entity;
 
 use Faker\Provider\Lorem;
 use PHPUnit\Framework\MockObject\MockObject;
-use ReflectionException;
-use soIT\LaravelModules\Providers\ServiceProvider;
-use soIT\LaravelModules\Entity\Module;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
+use ReflectionException;
+use soIT\LaravelModules\Entity\Module;
+use soIT\LaravelModules\Providers\ServiceProvider;
 
 class ModuleTest extends TestCase
 {
-
-    public function testGetFilesystem()
-    {
-    }
 
     /**
      * @throws ReflectionException
@@ -41,7 +38,7 @@ class ModuleTest extends TestCase
                                     ->disableOriginalConstructor()
                                     ->getMock();
 
-        $reflectionClassMock = $this->getMockBuilder(\ReflectionClass::class)
+        $reflectionClassMock = $this->getMockBuilder(ReflectionClass::class)
                                     ->disableOriginalConstructor()
                                     ->onlyMethods(['getShortName', 'getNamespaceName'])
                                     ->getMock();
@@ -64,13 +61,5 @@ class ModuleTest extends TestCase
 
         $this->assertEquals($name, $instance->getName());
         $this->assertEquals(implode('\\', array_splice($nsWords, 0, 4)), $instance->getNamespace());
-    }
-
-    public function testGetSeeder()
-    {
-    }
-
-    public function testGetName()
-    {
     }
 }

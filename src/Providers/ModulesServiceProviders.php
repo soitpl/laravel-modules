@@ -1,13 +1,18 @@
 <?php
 /**
+ * ModulesServiceProviders.php
+ *
+ * @lastModification 22.07.2020, 00:36
  * @author Rafał Tadaszak <r.tadaszak@soit.pl>
- * @copyright soIT {2019}
+ * @copyright soIT.pl 2018 - 2020
+ * @url http://www.soit.pl
  */
+
 namespace soIT\LaravelModules\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use soIT\LaravelModules\Providers\Commands\MigrationsCommandsServiceProvider;
-use soIT\LaravelModules\Repository\ModulesRepository;
+use soIT\LaravelModules\Containers\ModulesContainer;
+use soIT\LaravelModules\Providers\Commands\DatabaseCommandsServiceProvider;
 
 class ModulesServiceProviders extends ServiceProvider
 {
@@ -19,7 +24,7 @@ class ModulesServiceProviders extends ServiceProvider
     /**
      *
      */
-    public function boot(): void
+    public function boot():void
     {
         $this->createModuleRegistry();
         $this->registerCommands();
@@ -30,7 +35,7 @@ class ModulesServiceProviders extends ServiceProvider
     /**
      * Load modules providers form config files
      */
-    private function loadModulesConfig(): void
+    private function loadModulesConfig():void
     {
         $this->modules = $this->app['config']->get('modules');
     }
@@ -38,11 +43,14 @@ class ModulesServiceProviders extends ServiceProvider
     /**
      * Register modules providers
      */
-    private function registerProviders(): void
+    private function registerProviders():void
     {
-        array_map(function ($provider) {
-            $this->app->register($provider);
-        }, $this->modules);
+        array_map(
+            function ($provider) {
+                $this->app->register($provider);
+            },
+            $this->modules
+        );
     }
 
     /**
@@ -50,7 +58,7 @@ class ModulesServiceProviders extends ServiceProvider
      */
     private function registerCommands()
     {
-        $this->app->register(MigrationsCommandsServiceProvider::class);
+        $this->app->register(DatabaseCommandsServiceProvider::class);
     }
 
     /**
@@ -58,8 +66,11 @@ class ModulesServiceProviders extends ServiceProvider
      */
     private function createModuleRegistry()
     {
-        $this->app->singleton('soIT\LaravelModules\Repository\ModulesRepository', function ($app) {
-            return new ModulesRepository();
-        });
+        $this->app->singleton(
+            ModulesContainer::class,
+            function () {
+                return new ModulesContainer();
+            }
+        );
     }
 }

@@ -1,7 +1,11 @@
 <?php
 /**
+ * Module.php
+ *
+ * @lastModification 06.05.2020, 12:10
  * @author Rafał Tadaszak <r.tadaszak@soit.pl>
- * @copyright soIT 2019
+ * @copyright soIT.pl 2018 - 2020
+ * @url http://www.soit.pl
  */
 
 namespace soIT\LaravelModules\Entity;
@@ -76,12 +80,14 @@ class Module
      */
     public function getSeeder(string $seederClassName):?Seeder
     {
-        $file = $this->fileSystem->getSeedersPath().$seederClassName.'.php';
+        $path = $this->fileSystem->getSeedersPath();
+        $file = $path.DIRECTORY_SEPARATOR.$seederClassName.'.php';
 
         if (file_exists($file)) {
-            require $file;
+            include_once $file;
 
             $className = $this->namespace.'\\Database\\Seeders\\'.$seederClassName;
+
             return new $className();
         }
 

@@ -1,7 +1,11 @@
 <?php
 /**
+ * Filesystem.php
+ *
+ * @lastModification 04.05.2020, 07:35
  * @author Rafał Tadaszak <r.tadaszak@soit.pl>
- * @copyright soIT {2019}
+ * @copyright soIT.pl 2018 - 2020
+ * @url http://www.soit.pl
  */
 
 namespace soIT\LaravelModules\Files;

@@ -1,5 +1,14 @@
-.octicon {
-  display: inline-block;
-  vertical-align: text-top;
-  fill: currentColor;
+/*
+ * octicons.css
+ *
+ * @lastModification 22.07.2020, 00:36
+ * @author Rafał Tadaszak <r.tadaszak@soit.pl>
+ * @copyright soIT.pl 2018 - 2020
+ * @url http://www.soit.pl
+ */
+
+.octicon{
+	display: inline-block;
+	vertical-align: text-top;
+	fill: currentColor;
 }

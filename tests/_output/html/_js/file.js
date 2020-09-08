@@ -1,35 +1,42 @@
-  $(function() {
-   var $window     = $(window)
-     , $top_link   = $('#toplink')
-     , $body       = $('body, html')
-     , offset      = $('#code').offset().top
-     , hidePopover = function ($target) {
-        $target.data('popover-hover', false);
+/*
+ * file.js
+ *
+ * @lastModification 22.07.2020, 00:36
+ * @author Rafał Tadaszak <r.tadaszak@soit.pl>
+ * @copyright soIT.pl 2018 - 2020
+ * @url http://www.soit.pl
+ */
 
-        setTimeout(function () {
-         if (!$target.data('popover-hover')) {
-          $target.popover('hide');
-         }
-        }, 300);
-     };
+$(function() {
+  var $window = $(window)
+      , $top_link = $('#toplink')
+      , $body = $('body, html')
+      , offset = $('#code').offset().top
+      , hidePopover = function($target) {
+    $target.data('popover-hover', false);
 
-   $top_link.hide().click(function(event) {
+    setTimeout(function() {
+      if (!$target.data('popover-hover')) {
+        $target.popover('hide');
+      }
+    }, 300);
+  };
+
+  $top_link.hide().click(function(event) {
     event.preventDefault();
-    $body.animate({scrollTop:0}, 800);
-   });
+    $body.animate({scrollTop: 0}, 800);
+  });
 
-   $window.scroll(function() {
-    if($window.scrollTop() > offset) {
-     $top_link.fadeIn();
+  $window.scroll(function() {
+    if ($window.scrollTop() > offset) {
+      $top_link.fadeIn();
     } else {
-     $top_link.fadeOut();
+      $top_link.fadeOut();
     }
-   }).scroll();
+  }).scroll();
 
-   $('.popin')
-    .popover({trigger: 'manual'})
-    .on({
-     'mouseenter.popover': function () {
+  $('.popin').popover({trigger: 'manual'}).on({
+    'mouseenter.popover': function() {
       var $target = $(this);
       var $container = $target.children().first();
 
@@ -37,26 +44,24 @@
 
       // popover already displayed
       if ($target.next('.popover').length) {
-       return;
+        return;
       }
 
       // show the popover
       $container.popover('show');
 
       // register mouse events on the popover
-      $target.next('.popover:not(.popover-initialized)')
-       .on({
-        'mouseenter': function () {
-         $target.data('popover-hover', true);
+      $target.next('.popover:not(.popover-initialized)').on({
+        'mouseenter': function() {
+          $target.data('popover-hover', true);
         },
-        'mouseleave': function () {
-         hidePopover($container);
-        }
-       })
-       .addClass('popover-initialized');
-     },
-     'mouseleave.popover': function () {
+        'mouseleave': function() {
+          hidePopover($container);
+        },
+      }).addClass('popover-initialized');
+    },
+    'mouseleave.popover': function() {
       hidePopover($(this).children().first());
-     }
-    });
+    },
   });
+});
