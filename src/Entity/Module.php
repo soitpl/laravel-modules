@@ -1,8 +1,8 @@
 <?php
-/**
+/*
  * Module.php
  *
- * @lastModification 06.05.2020, 12:10
+ * @lastModification 22.10.2020, 23:47
  * @author Rafał Tadaszak <r.tadaszak@soit.pl>
  * @copyright soIT.pl 2018 - 2020
  * @url http://www.soit.pl
@@ -80,13 +80,12 @@ class Module
      */
     public function getSeeder(string $seederClassName):?Seeder
     {
-        $path = $this->fileSystem->getSeedersPath();
-        $file = $path.DIRECTORY_SEPARATOR.$seederClassName.'.php';
+        $file = $this->getSeederFile($seederClassName);
 
         if (file_exists($file)) {
             include_once $file;
 
-            $className = $this->namespace.'\\Database\\Seeders\\'.$seederClassName;
+            $className = $this->namespace.'\\'.$seederClassName;
 
             return new $className();
         }
@@ -149,5 +148,13 @@ class Module
 
             $this->namespace = substr($namespace, 0, strrpos($namespace, '\\'));
         }
+    }
+
+    private function getSeederFile(string $seederClassName):string
+    {
+        $path = $this->fileSystem->getSeedersPath();
+        $pathParts = explode('\\', $seederClassName);
+
+        return $path.DIRECTORY_SEPARATOR.end($pathParts).'.php';
     }
 }
