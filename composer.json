@@ -23,12 +23,12 @@
         "ext-json": "*"
     },
     "require-dev": {
-        "orchestra/testbench": "^3.0@dev",
+        "orchestra/testbench": "^6 || ^7",
         "mikey179/vfsstream": "^2.0@dev",
         "mockery/mockery": "^1.0",
         "phpunit/phpunit": "^8",
         "phpstan/phpstan": "^0.11.15",
-        "fzaninotto/faker": "^1.9"
+        "fakerphp/faker": "^1.9"
     },
 	"autoload": {
         "psr-4": { "soIT\\LaravelModules\\": "src/",  "soIT\\LaravelModules\\Tests\\Unit\\": "tests/Unit/"}
